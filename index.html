@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ml"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;title&gt;കേരള ക്വിസ്&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">body { font-family: sans-serif; padding: 20px; }</p>
+<p class="p1">.hidden { display:none; }</p>
+<p class="p1">button { margin:5px; padding:10px; }</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;h2&gt;കേരള ക്വിസ്&lt;/h2&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="userForm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>പേര്: &lt;input type="text" id="name"&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>വയസ്: &lt;input type="number" id="age"&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ലിംഗം:</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;select id="sex"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;option&gt;Male&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;option&gt;Female&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/select&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="startQuiz()"&gt;തുടങ്ങുക&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="quiz" class="hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h3 id="qText"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="options"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="nextQ()"&gt;അടുത്തത്&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="result" class="hidden"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">let attempts = localStorage.getItem("attempts") || 0;</p>
+<p class="p2"><br></p>
+<p class="p1">if(attempts &gt;= 3){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.body.innerHTML = "&lt;h2&gt;പരമാവധി ശ്രമങ്ങൾ കഴിഞ്ഞു&lt;/h2&gt;";</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">const questions = [</p>
+<p class="p2"><br></p>
+<p class="p1">{q:"കേരളത്തിന്റെ തലസ്ഥാനം ഏത്?", o:["തിരുവനന്തപുരം","കൊച്ചി","കോഴിക്കോട്","തൃശ്ശൂർ"], a:0},</p>
+<p class="p1">{q:"കേരളം രൂപം കൊണ്ട വർഷം?", o:["1956","1947","1960","1950"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിന്റെ സംസ്ഥാന മൃഗം?", o:["ആന","കടുവ","കുരങ്ങ്","മാന"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിന്റെ സംസ്ഥാന പക്ഷി?", o:["കാക്ക","മയൂർ","കുയിൽ","ഹോൺബിൽ"], a:3},</p>
+<p class="p1">{q:"കേരളത്തിന്റെ സംസ്ഥാന പൂവ്?", o:["റോസ്","താമര","കൃഷ്ണകമലം","ജാസ്മിൻ"], a:2},</p>
+<p class="p1">{q:"കേരളത്തിന്റെ സംസ്ഥാന വൃക്ഷം?", o:["മാവ്","തേങ്ങ","പൈൻ","നീം"], a:1},</p>
+<p class="p1">{q:"കേരളത്തിൽ ഏറ്റവും വലിയ നദി?", o:["പെരിയാർ","പമ്പ","ഭാരതപ്പുഴ","ചാലക്കുടി"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ ഏറ്റവും വലിയ ജില്ല?", o:["ഇടുക്കി","പാലക്കാട്","മലപ്പുറം","കണ്ണൂർ"], a:2},</p>
+<p class="p1">{q:"കേരളത്തിലെ ഏറ്റവും ചെറിയ ജില്ല?", o:["ആലപ്പുഴ","കൊച്ചി","വയനാട്","കാസർഗോഡ്"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിന്റെ ഔദ്യോഗിക ഭാഷ?", o:["തമിഴ്","ഹിന്ദി","മലയാളം","ഇംഗ്ലീഷ്"], a:2},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത നൃത്തം?", o:["കഥക്","കുചിപുടി","കഥകളി","ഭരതനാട്യം"], a:2},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത യുദ്ധകല?", o:["കരാട്ടെ","കുങ്ഫു","കളരിപ്പയറ്റ്","ജൂഡോ"], a:2},</p>
+<p class="p1">{q:"ഓണം ഏത് വിളവെടുപ്പ് ഉത്സവം?", o:["കരിമ്പ്","അരി","ഗോതമ്പ്","കാപ്പി"], a:1},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രധാന തുറമുഖം?", o:["കൊച്ചി","കോഴിക്കോട്","തിരുവനന്തപുരം","കണ്ണൂർ"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രധാന കടൽ?", o:["അറേബ്യൻ കടൽ","ബംഗാൾ ഉൾക്കടൽ","ഇന്ത്യൻ മഹാസമുദ്രം","പസഫിക്"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത ദേശീയോദ്യാനം?", o:["പെരിയാർ","കസിറംഗ","സുന്ദർബൻസ്","ഗിര്"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത വെള്ളച്ചാട്ടം?", o:["അതിരപ്പള്ളി","ജോഗ്","ദൂധ്സാഗർ","നയാഗ്ര"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത ബാക്ക്‌വാട്ടർ?", o:["വെമ്പനാട്","ചിലിക്ക","ദാൽ","ലോക്‌ടക്"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത ക്ഷേത്രം?", o:["പദ്മനാഭസ്വാമി","തിരുപ്പതി","കാശി","മീനാക്ഷി"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത കായൽ?", o:["വെമ്പനാട്","ചിലിക്ക","പുലിക്കാട്","വൂളർ"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത വന്യജീവി സങ്കേതം?", o:["സൈലന്റ് വാലി","ജിം കോർബെറ്റ്","രണ്ഠംബോർ","ബന്ദിപ്പൂർ"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത ഹിൽ സ്റ്റേഷൻ?", o:["മുന്നാർ","മണാലി","ശിംല","ദാർജിലിംഗ്"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത ഭക്ഷണം?", o:["ബിരിയാണി","സദ്യ","പിസ്സ","പാസ്റ്റ"], a:1},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത നദീതടം?", o:["കുട്ടനാട്","ഡെൽറ്റ","പ്ലെയിൻ","വാലി"], a:0},</p>
+<p class="p1">{q:"കേരളത്തിലെ പ്രശസ്ത നാടകം?", o:["കഥകളി","യക്ഷഗാനം","ഭവായി","തെരുക്കൂത്ത്"], a:0}</p>
+<p class="p2"><br></p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">let shuffled = [];</p>
+<p class="p1">let current = 0;</p>
+<p class="p1">let score = 0;</p>
+<p class="p2"><br></p>
+<p class="p1">function shuffle(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>shuffled = questions.sort(() =&gt; Math.random() - 0.5);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function startQuiz(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!name.value || !age.value){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>alert("വിവരങ്ങൾ പൂരിപ്പിക്കുക");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>localStorage.setItem("user", JSON.stringify({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name:name.value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>age:age.value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sex:sex.value</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>attempts++;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>localStorage.setItem("attempts", attempts);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("userForm").classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("quiz").classList.remove("hidden");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>shuffle();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>loadQ();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function loadQ(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let q = shuffled[current];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>qText.innerText = (current+1)+". "+q.q;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>options.innerHTML = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>q.o.forEach((opt,i)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let btn = document.createElement("button");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.innerText = opt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>btn.onclick = ()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(i === q.a) score++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>nextQ();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>options.appendChild(btn);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function nextQ(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>current++;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(current &lt; 25){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>loadQ();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>showResult();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function showResult(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>quiz.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>result.classList.remove("hidden");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>let percent = (score/25)*100;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>let pass = percent &gt;= 70 ? "വിജയം 🎉" : "പരാജയം";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>result.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h2&gt;ഫലം&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>മാർക്ക്: ${score}/25 &lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ശതമാനം: ${percent.toFixed(2)}% &lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>സ്ഥിതി: ${pass}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
